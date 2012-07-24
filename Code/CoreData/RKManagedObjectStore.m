@@ -125,7 +125,7 @@ static RKManagedObjectStore *defaultObjectStore = nil;
 
         if (nilOrManagedObjectModel == nil) {
             // NOTE: allBundles permits Core Data setup in unit tests
-            nilOrManagedObjectModel = [NSManagedObjectModel mergedModelFromBundles:[NSBundle allBundles]];
+            nilOrManagedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
         }
         NSMutableArray* allManagedObjectModels = [NSMutableArray arrayWithObject:nilOrManagedObjectModel];
         _managedObjectModel = [[NSManagedObjectModel modelByMergingModels:allManagedObjectModels] retain];
@@ -283,7 +283,7 @@ static RKManagedObjectStore *defaultObjectStore = nil;
 }
 
 - (NSManagedObjectContext *)newManagedObjectContext {
-    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
+    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
     [managedObjectContext setUndoManager:nil];
     [managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
