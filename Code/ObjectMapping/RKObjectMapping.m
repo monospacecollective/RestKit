@@ -36,6 +36,7 @@ NSString * const RKObjectMappingNestingAttributeKeyName = @"<RK_NESTING_ATTRIBUT
 @synthesize rootKeyPath = _rootKeyPath;
 @synthesize setDefaultValueForMissingAttributes = _setDefaultValueForMissingAttributes;
 @synthesize setNilForMissingRelationships = _setNilForMissingRelationships;
+@synthesize nilAttributeMappingMode = _nilAttributeMappingMode;
 @synthesize performKeyValueValidation = _performKeyValueValidation;
 @synthesize ignoreUnknownKeyPaths = _ignoreUnknownKeyPaths;
 
@@ -102,6 +103,7 @@ NSString * const RKObjectMappingNestingAttributeKeyName = @"<RK_NESTING_ATTRIBUT
         self.forceCollectionMapping = NO;
         self.performKeyValueValidation = YES;
         self.ignoreUnknownKeyPaths = NO;
+        self.nilAttributeMappingMode = RKNilAttributeMappingModeOmit;
     }
 
     return self;

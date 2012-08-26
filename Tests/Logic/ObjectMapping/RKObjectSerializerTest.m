@@ -288,4 +288,27 @@
     assertThat(data, is(equalTo(@"{\"key1-form-name\":\"value1\",\"set-form-name\":[\"setElementOne\",\"setElementTwo\",\"setElementThree\"]}")));
 }
 
+- (void)testShouldSerializeToJSONIncludingNulls
+{
+    RKLogConfigureByName("RestKit", RKLogLevelTrace);
+    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
+    
+    NSDictionary *object = [NSDictionary dictionaryWithObjectsAndKeys:@"value1", @"key1", @"value2", @"key2", [NSNull null], @"key3", nil];
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[NSDictionary class]];
+    [mapping addAttributeMapping:[RKObjectAttributeMapping mappingFromKeyPath:@"key1" toKeyPath:@"key1-form-name"]];
+    [mapping addAttributeMapping:[RKObjectAttributeMapping mappingFromKeyPath:@"key2" toKeyPath:@"key2-form-name"]];
+    [mapping addAttributeMapping:[RKObjectAttributeMapping mappingFromKeyPath:@"key3" toKeyPath:@"key3-form-name"]];
+    mapping.nilAttributeMappingMode = RKNilAttributeMappingModeNULL;
+    
+    RKObjectSerializer *serializer = [RKObjectSerializer serializerWithObject:object mapping:mapping];
+    NSError *error = nil;
+    id<RKRequestSerializable> serialization = [serializer serializationForMIMEType:@"application/json" error:&error];
+    NSString *data = [[[NSString alloc] initWithData:[serialization HTTPBody] encoding:NSUTF8StringEncoding] autorelease];
+    data = [data stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    assertThat(error, is(nilValue()));
+    assertThat(data, is(equalTo(@"{\"key2-form-name\":\"value2\",\"key1-form-name\":\"value1\",\"key3-form-name\":null}")));
+}
+
 @end

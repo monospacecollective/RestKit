@@ -23,6 +23,14 @@
 #import "RKObjectAttributeMapping.h"
 #import "RKObjectRelationshipMapping.h"
 
+enum {
+    RKNilAttributeMappingModeOmit,
+    RKNilAttributeMappingModeNULL
+};
+
+typedef NSUInteger RKNilAttributeMappingMode;
+
+
 /**
  An object mapping defines the rules for transforming a key-value coding
  compliant object into another representation. The mapping is defined in terms
@@ -92,6 +100,13 @@ relationship. Relationships are processed using an object mapping as well.
  object will be set to nil, clearing any existing value.
  */
 @property (nonatomic, assign) BOOL setNilForMissingRelationships;
+
+/**
+ Defines the mapping behavior when encountering nil values. 
+ Default is RKNilAttributeMappingModeOmit which omits the mapping for the nil key.
+ Optional mode is RKNilAttributeMappingModeNULL which completes the mapping for the key using NSNull
+ */
+@property (nonatomic, assign) RKNilAttributeMappingMode nilAttributeMappingMode;
 
 /**
  When YES, RestKit will invoke key-value validation at object mapping time.

@@ -188,8 +188,11 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
             }
         }
     } else if (value == [NSNull null] || [value isEqual:[NSNull null]]) {
-        // Transform NSNull -> nil for simplicity
-        return nil;
+        if (RKNilAttributeMappingModeNULL == self.objectMapping.nilAttributeMappingMode) {
+            return value;
+        } else {
+            return nil;
+        }
     } else if ([sourceType isSubclassOfClass:[NSSet class]]) {
         // Set -> Array
         if ([destinationType isSubclassOfClass:[NSArray class]]) {
@@ -284,10 +287,10 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
 
      See issue & pull request: https://github.com/RestKit/RestKit/pull/436
      */
-    if (*value == [NSNull null] || [*value isEqual:[NSNull null]]) {
-        RKLogWarning(@"Coercing NSNull value to nil in shouldSetValue:atKeyPath: -- should be fixed.");
-        *value = nil;
-    }
+//    if (*value == [NSNull null] || [*value isEqual:[NSNull null]]) {
+//        RKLogWarning(@"Coercing NSNull value to nil in shouldSetValue:atKeyPath: -- should be fixed.");
+//        *value = nil;
+//    }
 
     if (nil == currentValue && nil == *value) {
         // Both are nil
@@ -343,8 +346,10 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
 
     // Inspect the property type to handle any value transformations
     Class type = [self.objectMapping classForProperty:attributeMapping.destinationKeyPath];
-    if (type && NO == [[value class] isSubclassOfClass:type]) {
-        value = [self transformValue:value atKeyPath:attributeMapping.sourceKeyPath toType:type];
+    if (type || [value isKindOfClass:[NSNull class]]) {
+        if (NO == [[value class] isSubclassOfClass:type]) {
+            value = [self transformValue:value atKeyPath:attributeMapping.sourceKeyPath toType:type];
+        }
     }
 
     // Ensure that the value is different
