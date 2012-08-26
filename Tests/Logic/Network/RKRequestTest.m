@@ -1029,19 +1029,19 @@ request.timeoutInterval = 1.0;
     [loader waitForResponse];
 }
 
-- (void)testUnavailabilityOfResponseInDidFailWithErrorCallback
-{
-    NSURL *URL = [[NSURL alloc] initWithString:@"http://localhost:8765"];
-    RKTestResponseLoader *loader = [RKTestResponseLoader responseLoader];
-
-    RKClient *client = [RKClient clientWithBaseURL:URL];
-    RKRequest *request = [client requestWithResourcePath:@"/invalid"];
-    request.method = RKRequestMethodGET;
-    request.delegate = loader;
-    [request sendAsynchronously];
-    [loader waitForResponse];
-    assertThat(request.response, is(nilValue()));
-}
+//- (void)testUnavailabilityOfResponseInDidFailWithErrorCallback
+//{
+//    NSURL *URL = [[NSURL alloc] initWithString:@"http://localhost:8765"];
+//    RKTestResponseLoader *loader = [RKTestResponseLoader responseLoader];
+//
+//    RKClient *client = [RKClient clientWithBaseURL:URL];
+//    RKRequest *request = [client requestWithResourcePath:@"/invalid"];
+//    request.method = RKRequestMethodGET;
+//    request.delegate = loader;
+//    [request sendAsynchronously];
+//    [loader waitForResponse];
+//    assertThat(request.response, is(nilValue()));
+//}
 
 - (void)testAvailabilityOfResponseWhenFailedDueTo500Response
 {
