@@ -196,6 +196,10 @@ static NSUInteger RKObjectPaginatorDefaultPerPage = 25;
       NSAssert(NO, @"Paginator perPage set is 0.");
       RKLogError(@"Paginator perPage set is 0.");
     }
+    
+    if ([self.delegate respondsToSelector:@selector(paginator:willLoadPage:objectLoader:)]) {
+        [self.delegate paginator:self objectLoader:loader willMapData:mappableData];
+    }
 }
 
 #pragma mark - Action methods

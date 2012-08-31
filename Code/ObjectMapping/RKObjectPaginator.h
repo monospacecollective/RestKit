@@ -256,6 +256,11 @@ typedef void(^RKObjectPaginatorDidFailWithErrorBlock)(NSError *error, RKObjectLo
 @optional
 
 /**
+ Tells the delegate that the paginator's objectLoad is about to begin mapping the data. This is a helpful hook to edit the server response before it's handed off the mapper.
+ */
+- (void)paginator:(RKObjectPaginator *)paginator objectLoader:(RKObjectLoader *)loader willMapData:(inout id *)mappableData;
+
+/**
  Tells the delegate that the paginator is about to begin loading a page of objects.
 
  @param paginator The paginator performing the load.
