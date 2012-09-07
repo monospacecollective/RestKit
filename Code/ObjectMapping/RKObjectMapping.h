@@ -376,6 +376,8 @@ relationship. Relationships are processed using an object mapping as well.
  */
 - (void)mapKeyPath:(NSString *)sourceKeyPath toAttribute:(NSString *)destinationAttribute;
 
+- (void)mapKeyPath:(NSString *)sourceKeyPath toAttribute:(NSString *)destinationKeyPath shouldSerializeNumbersToBoolValues:(BOOL)shouldSerializeNumbersToBoolValues;
+
 /**
  Instantiate and add an RKObjectRelationshipMapping instance targeting a keyPath within the mappable
  source data to a relationship property on the target object.

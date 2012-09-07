@@ -25,6 +25,7 @@
 #import "NSDictionary+RKRequestSerialization.h"
 #import "RKParserRegistry.h"
 #import "RKLog.h"
+#import "RKManagedObjectMapping.h"
 
 // Set Logging Component
 #undef RKLogComponent
@@ -130,7 +131,11 @@
         // NSOrderedSets are not natively serializable, so let's just turn it into an NSArray
         transformedValue = [value array];
     }
-
+    
+    if (mapping.mappingShouldSerializeBOOLValuesForNSNumberSource && [value isKindOfClass:[NSNumber class]]) {
+        transformedValue = [value boolValue] ? [NSNumber numberWithBool:YES] : [NSNumber numberWithBool:NO];
+    }
+    
     if (transformedValue) {
         RKLogDebug(@"Serialized %@ value at keyPath to %@ (%@)", NSStringFromClass([value class]), NSStringFromClass([transformedValue class]), value);
         [operation.destinationObject setValue:transformedValue forKey:keyPath];

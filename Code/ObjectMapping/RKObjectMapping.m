@@ -269,7 +269,13 @@ NSString * const RKObjectMappingNestingAttributeKeyName = @"<RK_NESTING_ATTRIBUT
 
 - (void)mapKeyPath:(NSString *)sourceKeyPath toAttribute:(NSString *)destinationKeyPath
 {
+    [self mapKeyPath:sourceKeyPath toAttribute:destinationKeyPath shouldSerializeNumbersToBoolValues:NO];
+}
+
+- (void)mapKeyPath:(NSString *)sourceKeyPath toAttribute:(NSString *)destinationKeyPath shouldSerializeNumbersToBoolValues:(BOOL)shouldSerializeNumbersToBoolValues
+{
     RKObjectAttributeMapping *mapping = [RKObjectAttributeMapping mappingFromKeyPath:sourceKeyPath toKeyPath:destinationKeyPath];
+    mapping.mappingShouldSerializeBOOLValuesForNSNumberSource = shouldSerializeNumbersToBoolValues;
     [self addAttributeMapping:mapping];
 }
 

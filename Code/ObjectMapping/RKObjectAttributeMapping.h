@@ -26,6 +26,9 @@
 @property (nonatomic, retain) NSString *sourceKeyPath;
 @property (nonatomic, retain) NSString *destinationKeyPath;
 
+// Default is NO, When YES serializer will render NSNumber values as using the boolValue to render JSON-like @"true" or @"false"
+@property (nonatomic, assign) BOOL mappingShouldSerializeBOOLValuesForNSNumberSource;
+
 /**
  Defines a mapping from one keyPath to another within an object mapping
  */

@@ -27,6 +27,8 @@ extern NSString * const RKObjectMappingNestingAttributeKeyName;
 @synthesize sourceKeyPath = _sourceKeyPath;
 @synthesize destinationKeyPath = _destinationKeyPath;
 
+@synthesize mappingShouldSerializeBOOLValuesForNSNumberSource = _mappingShouldSerializeBOOLValuesForNSNumberSource;
+
 /**
  @private
  */
@@ -38,6 +40,7 @@ extern NSString * const RKObjectMappingNestingAttributeKeyName;
     if (self) {
         _sourceKeyPath = [sourceKeyPath retain];
         _destinationKeyPath = [destinationKeyPath retain];
+        _mappingShouldSerializeBOOLValuesForNSNumberSource = NO;
     }
 
     return self;
@@ -46,6 +49,7 @@ extern NSString * const RKObjectMappingNestingAttributeKeyName;
 - (id)copyWithZone:(NSZone *)zone
 {
     RKObjectAttributeMapping *copy = [[[self class] allocWithZone:zone] initWithSourceKeyPath:self.sourceKeyPath andDestinationKeyPath:self.destinationKeyPath];
+    copy.mappingShouldSerializeBOOLValuesForNSNumberSource = self.mappingShouldSerializeBOOLValuesForNSNumberSource;
     return copy;
 }
 
