@@ -116,6 +116,7 @@ NSString * const RKObjectMappingNestingAttributeKeyName = @"<RK_NESTING_ATTRIBUT
     copy.rootKeyPath = self.rootKeyPath;
     copy.setDefaultValueForMissingAttributes = self.setDefaultValueForMissingAttributes;
     copy.setNilForMissingRelationships = self.setNilForMissingRelationships;
+    copy.nilAttributeMappingMode = self.nilAttributeMappingMode;
     copy.forceCollectionMapping = self.forceCollectionMapping;
     copy.performKeyValueValidation = self.performKeyValueValidation;
     copy.dateFormatters = self.dateFormatters;
