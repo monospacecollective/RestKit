@@ -395,11 +395,6 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
                 value = self.sourceObject;
             } else {
                 value = [self.sourceObject valueForKeyPath:attributeMapping.sourceKeyPath];
-                
-                // when the mapper wants us to represent nil as null we need to add it here, else a value of nil will be skipped.
-                if (nil == value && RKNilAttributeMappingModeNULL == self.objectMapping.nilAttributeMappingMode) {
-                    value = [NSNull null];
-                }
             }
         }
         @catch (NSException *exception) {
@@ -410,6 +405,12 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
             }
 
             @throw;
+        }
+        
+        // when the mapper wants us to represent nil as null we need to add it here, else a value of nil will be skipped.
+        if (nil == value && RKNilAttributeMappingModeNULL == self.objectMapping.nilAttributeMappingMode) {
+            RKLogTrace(@"Did not find mappable attribute value keyPath '%@', setting value to NULL", attributeMapping.sourceKeyPath);
+            value = [NSNull null];
         }
 
         if (value) {
