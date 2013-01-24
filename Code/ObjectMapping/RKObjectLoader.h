@@ -124,7 +124,7 @@ typedef void(^RKObjectLoaderDidLoadObjectsDictionaryBlock)(NSDictionary *diction
  Note that the mappable data is a pointer to a pointer to allow you to replace the mappable data
  with a new object to be mapped. You must dereference it to access the value.
  */
-- (void)objectLoader:(RKObjectLoader *)loader willMapData:(inout id *)mappableData;
+- (void)objectLoader:(RKObjectLoader *)loader willMapData:(id *)mappableData;
 
 @end
 
